@@ -171,6 +171,61 @@ public class PostsServiceTests
     
     #endregion
 
+    #region DeletePostByIdAsync
+
+    [Test]
+    public async Task DeletePostByIdAsync_AsAuthor_DeletesAndReturnsTrue()
+    {
+        // Arrange
+        var post = await CreatePostAsync("To be deleted", DateTime.UtcNow);
+
+        // Act
+        var result = await postsService.DeletePostByIdAsync(post.Id, testUser.Id);
+        
+        // Clear the change tracker to force a fresh database query
+        databaseFixture.Database.ChangeTracker.Clear();
+        
+        using (Assert.EnterMultipleScope())
+        {
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(await databaseFixture.Database.Posts.FindAsync(post.Id), Is.Null);
+        }
+    }
+
+    [Test]
+    public async Task DeletePostByIdAsync_AsDifferentUser_ReturnsFalseAndKeepsPost()
+    {
+        // Arrange
+        var post = await CreatePostAsync("Protected post", DateTime.UtcNow);
+        var otherUserId = testUser.Id + 999;
+
+        // Act
+        var result = await postsService.DeletePostByIdAsync(post.Id, otherUserId);
+
+        using (Assert.EnterMultipleScope())
+        {
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(await databaseFixture.Database.Posts.FindAsync(post.Id), Is.Not.Null);
+        }
+    }
+
+    [Test]
+    public async Task DeletePostByIdAsync_WithNonExistentPost_ReturnsFalse()
+    {
+        // Arrange
+        const long nonExistentId = 99999L;
+
+        // Act
+        var result = await postsService.DeletePostByIdAsync(nonExistentId, testUser.Id);
+
+        // Assert
+        Assert.That(result, Is.False);
+    }
+
+    #endregion
+
     private async Task<Post> CreatePostAsync(string content, DateTime createdAt)
     {
         var post = new Post
