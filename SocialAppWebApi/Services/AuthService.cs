@@ -21,9 +21,17 @@ public class AuthService(AppDatabase database, UsersService usersService, TokenV
             Posts = [],
             PostLikes = []
         };
-        
-        await database.Users.AddAsync(user);
-        await database.SaveChangesAsync();
+
+        try
+        {
+            await database.Users.AddAsync(user);
+            await database.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            // Another request has already registered the same username
+            return null;
+        }
         
         return user;
     }

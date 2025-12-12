@@ -7,7 +7,7 @@ public class UsersService(AppDatabase database)
 {
     public async Task<User?> GetUserByIdAsync(long id)
     {
-        var user = await database.Users.FirstOrDefaultAsync(u => u.Id == id);
+        var user = await database.Users.FindAsync(id);
         return user;
     }
     

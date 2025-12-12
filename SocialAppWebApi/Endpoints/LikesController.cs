@@ -17,7 +17,7 @@ public class LikesController(UsersService usersService, LikesService likesServic
             return Unauthorized();
         
         if (!await likesService.CreateLikeAsync(user, likeDto.PostId))
-            return BadRequest();
+            return BadRequest("The current user has already liked this post");
         
         return Ok();
     }
@@ -29,7 +29,7 @@ public class LikesController(UsersService usersService, LikesService likesServic
             return Unauthorized();
         
         if (!await likesService.DeleteLikeAsync(user, likeDto.PostId))
-            return BadRequest();
+            return BadRequest("The current user has not liked this post yet");
         
         return Ok();
     }
