@@ -12,6 +12,12 @@ public class AppDatabase(DbContextOptions<AppDatabase> options) : DbContext(opti
     {
         base.OnModelCreating(builder);
 
+        // Username must be unique
+        builder.Entity<User>()
+            .HasIndex(u => u.Username)
+            .IsUnique();
+        
+        // Entity relationships
         builder.Entity<User>()
             .HasMany(u => u.Posts)
             .WithOne(p => p.Author)

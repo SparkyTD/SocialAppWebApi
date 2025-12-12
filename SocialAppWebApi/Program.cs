@@ -71,7 +71,7 @@ builder.Services.AddQuartz(q =>
     q.AddTrigger(opt => opt
         .ForJob(jobKey)
         .WithIdentity($"{nameof(UpdateCachedLikeCountsJob)}.Trigger")
-        .WithCronSchedule("*/10 * * * * ?"));
+        .WithCronSchedule(builder.Configuration.GetRequiredSection("LikeCacheUpdateSchedule").Value!));
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
@@ -96,7 +96,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseSwaggerUI(options => options
-    .SwaggerEndpoint("v1/swagger.json", "Posts API V1"));
+app.UseSwaggerUI(options => options.SwaggerEndpoint("v1/swagger.json", "Posts API V1"));
 
 app.Run();

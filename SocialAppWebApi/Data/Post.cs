@@ -10,5 +10,5 @@ public class Post
     public long CachedLikeCount { get; set; }
     public long AuthorId { get; set; }
     public required User Author { get; set; }
-    public required List<PostLike> Likes { get; set; }
+    public List<PostLike> Likes { get; set; } = [];
 }

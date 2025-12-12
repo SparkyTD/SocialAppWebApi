@@ -9,5 +9,5 @@ public class PostLike
     public Post Post { get; set; }
     public long UserId { get; set; }
     public User User { get; set; }
-    public required DateTime Created { get; set; }
+    public required DateTime CreatedAt { get; set; }
 }
