@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SocialAppWebApi.Data;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Services;
 
-public class LikesService(AppDatabase database)
+public class LikesService(AppDatabase database) : ILikesService
 {
     public async Task<bool> CreateLikeAsync(User user, long postId)
     {

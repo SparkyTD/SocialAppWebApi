@@ -9,6 +9,7 @@ using SocialAppWebApi.Data;
 using SocialAppWebApi.Dto;
 using SocialAppWebApi.Jobs;
 using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -90,10 +91,10 @@ builder.Services.AddQuartz(q =>
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 // Domain-specific services
-builder.Services.AddTransient<PostsService>();
-builder.Services.AddTransient<LikesService>();
-builder.Services.AddTransient<UsersService>();
-builder.Services.AddTransient<AuthService>();
+builder.Services.AddTransient<IPostsService, PostsService>();
+builder.Services.AddTransient<ILikesService, LikesService>();
+builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
 

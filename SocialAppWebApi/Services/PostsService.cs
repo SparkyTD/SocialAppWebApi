@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SocialAppWebApi.Data;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Services;
 
-public class PostsService(AppDatabase database)
+public class PostsService(AppDatabase database) : IPostsService
 {
     public IEnumerable<Post> GetPosts(int page, int pageSize)
     {

@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SocialAppWebApi.Data;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Services;
 
-public class UsersService(AppDatabase database)
+public class UsersService(AppDatabase database) : IUsersService
 {
     public async Task<User?> GetUserByIdAsync(long id)
     {

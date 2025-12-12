@@ -1,9 +1,9 @@
 using Quartz;
-using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Jobs;
 
-public class UpdateCachedLikeCountsJob(LikesService likesService) : IJob
+public class UpdateCachedLikeCountsJob(ILikesService likesService) : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {

@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialAppWebApi.Data;
 using SocialAppWebApi.Dto;
-using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Endpoints;
 
 [Authorize]
 [ApiController]
 [Route("v1/[controller]")]
-public class PostsController(PostsService postsService, UsersService usersService, IMapper mapper) : UserControllerBase(usersService)
+public class PostsController(IPostsService postsService, IUsersService usersService, IMapper mapper) : UserControllerBase(usersService)
 {
     [HttpGet]
     public ActionResult<IEnumerable<Post>> GetPosts(

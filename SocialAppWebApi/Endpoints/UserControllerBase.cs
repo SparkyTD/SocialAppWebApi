@@ -1,11 +1,11 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using SocialAppWebApi.Data;
-using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Endpoints;
 
-public class UserControllerBase(UsersService usersService) : ControllerBase
+public class UserControllerBase(IUsersService usersService) : ControllerBase
 {
     protected async Task<User?> GetCurrentUserAsync()
     {

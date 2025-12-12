@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialAppWebApi.Dto;
-using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Endpoints;
 
 [Authorize]
 [ApiController]
 [Route("v1/[controller]")]
-public class LikesController(UsersService usersService, LikesService likesService) : UserControllerBase(usersService)
+public class LikesController(IUsersService usersService, ILikesService likesService) : UserControllerBase(usersService)
 {
     [HttpPut]
     public async Task<IActionResult> CreateLike([FromBody] PostLikeDto likeDto)

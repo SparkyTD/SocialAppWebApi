@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialAppWebApi.Dto;
-using SocialAppWebApi.Services;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Endpoints;
 
 [ApiController]
 [Route("v1/[controller]")]
-public class AuthController(AuthService authService) : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost]
     [Route(nameof(Register))]

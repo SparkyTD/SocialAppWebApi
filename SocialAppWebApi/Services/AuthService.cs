@@ -3,10 +3,11 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SocialAppWebApi.Data;
+using SocialAppWebApi.Services.Interfaces;
 
 namespace SocialAppWebApi.Services;
 
-public class AuthService(AppDatabase database, UsersService usersService, TokenValidationParameters jwtTokenParameters)
+public class AuthService(AppDatabase database, IUsersService usersService, TokenValidationParameters jwtTokenParameters) : IAuthService
 {
     public async Task<User?> RegisterAsync(string username, string password)
     {
