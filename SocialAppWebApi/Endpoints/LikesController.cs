@@ -1,0 +1,36 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SocialAppWebApi.Dto;
+using SocialAppWebApi.Services;
+
+namespace SocialAppWebApi.Endpoints;
+
+[Authorize]
+[ApiController]
+[Route("[controller]")]
+public class LikesController(UsersService usersService, LikesService likesService) : UserControllerBase(usersService)
+{
+    [HttpPut]
+    public async Task<IActionResult> CreateLike([FromBody] PostLikeDto likeDto)
+    {
+        if (await GetCurrentUserAsync() is not {} user)
+            return Unauthorized();
+        
+        if (!await likesService.CreateLikeAsync(user, likeDto.PostId))
+            return BadRequest();
+        
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteLike([FromBody] PostLikeDto likeDto)
+    {
+        if (await GetCurrentUserAsync() is not {} user)
+            return Unauthorized();
+        
+        if (!await likesService.DeleteLikeAsync(user, likeDto.PostId))
+            return BadRequest();
+        
+        return Ok();
+    }
+}
