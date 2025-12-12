@@ -180,3 +180,14 @@ ___
 - **Quartz**: Used for scheduling periodic tasks
 - **Serilog**: Preferred alternative logging framework
 - **Swashbuckle**: Swagger / OpenAPI sandbox UI (hosted at http://localhost:5202/swagger/index.html)
+
+___
+
+# Run Instructions
+```shell
+git clone https://github.com/SparkyTD/SocialAppWebApi
+cd SocialAppWebApi
+dotnet build
+dotnet test # optional
+dotnet run --project SocialAppWebApi
+```
