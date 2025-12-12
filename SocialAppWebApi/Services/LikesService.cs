@@ -13,6 +13,14 @@ public class LikesService(AppDatabase database)
             UserId = user.Id,
             CreatedAt = DateTime.UtcNow,
         };
+        
+        // If there's already a locally tracked entity with matching data,
+        // skip this operation entirely and return null.
+        var trackedEntity = database.PostLikes.Local
+            .FirstOrDefault(pl => pl.PostId == postId && pl.UserId == user.Id);
+    
+        if (trackedEntity != null)
+            return false;
 
         try
         {
