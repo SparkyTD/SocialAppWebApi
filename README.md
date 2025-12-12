@@ -27,6 +27,151 @@ forced-update of the cache column ensures that the like count displayed to the u
 
 ___
 
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/v1/auth/register` | Register a new user |
+| `POST` | `/v1/auth/login` | Authenticate and receive JWT token |
+
+#### Register User
+**POST** `/v1/auth/register`
+
+**Request Body:**
+```json
+{
+  "username": "string",  // 1-32 characters
+  "password": "string"   // 4-128 characters
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Login
+**POST** `/v1/auth/login`
+
+**Request Body:**
+```json
+{
+  "username": "string",  // 1-32 characters
+  "password": "string"   // 4-128 characters
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+---
+
+### Posts
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/v1/posts` | Retrieve paginated posts |
+| `POST` | `/v1/posts` | Create a new post |
+| `GET` | `/v1/posts/{id}` | Get a specific post |
+| `DELETE` | `/v1/posts/{id}` | Delete a post |
+
+#### Get Posts
+**GET** `/v1/posts`
+
+**Query Parameters:**
+
+| Parameter | Type | Constraints | Description |
+|-----------|------|-------------|-------------|
+| `page` | integer | ≥ 1 | Page number |
+| `pageSize` | integer | 1-100 | Items per page |
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "body": "Post content...",
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+]
+```
+
+---
+
+#### Create Post
+**POST** `/v1/posts`
+
+**Request Body:**
+```json
+{
+  "body": "string"  // 1-240 characters
+}
+```
+
+**Response:** Post object
+
+---
+
+#### Get Post by ID
+**GET** `/v1/posts/{id}`
+
+**Path Parameters:**
+- `id` - Post ID (integer)
+
+**Response:** Post object or `404 Not Found`
+
+---
+
+#### Delete Post
+**DELETE** `/v1/posts/{id}`
+
+**Path Parameters:**
+- `id` - Post ID (integer)
+
+**Response:** `200 OK`
+
+---
+
+### Likes
+
+| Method | Endpoint | Description                        |
+|--------|----------|------------------------------------|
+| `PUT` | `/v1/likes` | Like a post as the current user    |
+| `DELETE` | `/v1/likes` | Unlike a post as the current user  |
+
+#### Like Post
+**PUT** `/v1/likes`
+
+**Request Body:**
+```json
+{
+  "postId": integer
+}
+```
+
+**Response:** `200 OK`
+
+---
+
+#### Unlike Post
+**DELETE** `/v1/likes`
+
+**Request Body:**
+```json
+{
+  "postId": integer
+}
+```
+
+**Response:** `200 OK`
+
+___
+
 ## External (Non-MSFT) Libraries Used
 - **NUnit**: For unit tests
 - **Moq**: For mocking service interfaces in unit tests
