@@ -98,6 +98,9 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
 
+// Ensure that the DB is created (for demonstration purposes)
+app.Services.CreateScope().ServiceProvider.GetService<AppDatabase>()!.Database.EnsureCreated();
+
 app.UseSwagger();
 
 // Configure the HTTP request pipeline.

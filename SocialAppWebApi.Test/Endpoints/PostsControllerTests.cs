@@ -25,7 +25,7 @@ public class PostsControllerTests
         _mapperMock = new Mock<IMapper>();
         _controller = new PostsController(_postsServiceMock.Object, _usersServiceMock.Object, _mapperMock.Object);
     }
-    
+
     #region GetPosts
 
     [Test]
@@ -66,7 +66,7 @@ public class PostsControllerTests
     {
         // Arrange
         var posts = new List<Post> { CreateTestPost(), CreateTestPost() };
-        var dtos = new List<PostDto> { new(), new() };
+        var dtos = new List<PostDto> { new() { Content = "", Author = "" }, new() { Content = "", Author = "" } };
         _postsServiceMock
             .Setup(s => s.GetPosts(1, 10))
             .Returns(posts);
@@ -125,7 +125,7 @@ public class PostsControllerTests
             .ReturnsAsync(post);
         _mapperMock
             .Setup(m => m.Map<PostDto>(post))
-            .Returns(new PostDto());
+            .Returns(new PostDto { Content = "", Author = "" });
 
         // Act
         var result = await _controller.GetPost(1);
@@ -139,7 +139,7 @@ public class PostsControllerTests
     {
         // Arrange
         var post = CreateTestPost();
-        var dto = new PostDto { Content = "Test content" };
+        var dto = new PostDto { Content = "Test content", Author = "" };
         _postsServiceMock
             .Setup(s => s.GetPostByIdAsync(1))
             .ReturnsAsync(post);
@@ -186,7 +186,7 @@ public class PostsControllerTests
             .ReturnsAsync(CreateTestPost());
         _mapperMock
             .Setup(m => m.Map<PostDto>(It.IsAny<Post>()))
-            .Returns(new PostDto());
+            .Returns(new PostDto { Content = "", Author = "" });
 
         // Act
         var result = await _controller.CreatePost(createDto);
@@ -229,7 +229,7 @@ public class PostsControllerTests
         SetupAuthenticatedUser(user);
         var createDto = new CreatePostDto { Body = "Content" };
         var savedPost = CreateTestPost();
-        var dto = new PostDto { Content = "Content" };
+        var dto = new PostDto { Content = "Content", Author = "" };
         _postsServiceMock
             .Setup(s => s.SavePostAsync(It.IsAny<Post>()))
             .ReturnsAsync(savedPost);
@@ -372,7 +372,7 @@ public class PostsControllerTests
     }
 
     #endregion
-    
+
     private static User Createadmin() => new()
     {
         Id = 1,
@@ -424,5 +424,4 @@ public class PostsControllerTests
             .Setup(s => s.GetUserByIdAsync(999))
             .ReturnsAsync((User?)null);
     }
-
 }
