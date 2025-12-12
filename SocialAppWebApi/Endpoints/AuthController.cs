@@ -5,7 +5,7 @@ using SocialAppWebApi.Services;
 namespace SocialAppWebApi.Endpoints;
 
 [ApiController]
-[Route("[controller]")]
+[Route("v1/[controller]")]
 public class AuthController(AuthService authService) : ControllerBase
 {
     [HttpPost]

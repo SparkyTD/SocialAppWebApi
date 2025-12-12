@@ -7,7 +7,7 @@ namespace SocialAppWebApi.Endpoints;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("v1/[controller]")]
 public class LikesController(UsersService usersService, LikesService likesService) : UserControllerBase(usersService)
 {
     [HttpPut]

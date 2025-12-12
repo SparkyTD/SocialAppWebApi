@@ -44,6 +44,7 @@ builder.Services.AddSwaggerGen(options =>
 
 // Controllers
 builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // Database and DTO mapper
 builder.Services.AddDbContext<AppDatabase>(options =>

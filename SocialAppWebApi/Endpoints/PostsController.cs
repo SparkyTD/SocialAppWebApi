@@ -10,7 +10,7 @@ namespace SocialAppWebApi.Endpoints;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("v1/[controller]")]
 public class PostsController(PostsService postsService, UsersService usersService, IMapper mapper) : UserControllerBase(usersService)
 {
     [HttpGet]
