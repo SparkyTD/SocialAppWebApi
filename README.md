@@ -1,5 +1,5 @@
 # SocialAppWebApi
-This is a very simple proof-of-concept API microservice for handling posts and likes ona  social media platform. 
+This is a very simple proof-of-concept API microservice for handling posts and likes on a social media platform. 
 Written in C# using ASP.Net Core, Dependency Injection and Entity Framework Core, as well as other supporting libraries.
 
 ___
